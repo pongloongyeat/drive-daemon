@@ -1,0 +1,13 @@
+[Desktop Entry]
+Type=Application
+Name=Drive Daemon
+Comment=Drive Daemon
+Exec=com.github.pongloongyeat.drive-daemon
+Terminal=false
+Categories=System;Utilities;
+NoDisplay=true
+StartupNotify=true
+X-GNOME-AutoRestart=true
+X-GNOME-Autostart-Notify=true
+X-GNOME-Autostart-Phase=Initialization
+OnlyShowIn=Pantheon
