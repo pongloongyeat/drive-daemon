@@ -19,6 +19,8 @@
  */
 
 public class DriveDaemon.Application : GLib.Application {
+    private VolumeMonitor volume_monitor;
+
     public Application () {
         Object (
             application_id: "com.github.pongloongyeat.drive-daemon",
@@ -28,6 +30,35 @@ public class DriveDaemon.Application : GLib.Application {
 
     public override void activate () {
         hold ();
+
+        /* For some reason, DriveMonitor doesn't get us
+        the information we want (number of volumes) but
+        VolumeMonitor does so this is a workaround. */
+        volume_monitor = VolumeMonitor.get ();
+
+        var n_volumes = 0;
+
+        this.volume_monitor.volume_added.connect ((volume) => {
+            volume_added_callback (volume, ref n_volumes);
+        });
+    }
+
+    private void volume_added_callback (Volume volume, ref int n_volumes) {
+        var drive = volume.get_drive ();
+
+        // Send notification only after all volumes are added
+        n_volumes++;
+
+        if (n_volumes == drive.get_volumes ().length ()) {
+            var notification = new Notification (_("%s connected").printf (drive.get_name ()));
+            notification.set_icon (drive.get_icon ());
+            notification.set_body (_("With %u %s present").printf (n_volumes, ngettext ("volume", "volumes", n_volumes)));
+
+            send_notification (application_id, notification);
+
+            // Reset for next added device
+            n_volumes = 0;
+        }
     }
 
     public static int main (string[] args) {
