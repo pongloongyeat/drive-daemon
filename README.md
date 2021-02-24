@@ -1,6 +1,8 @@
 # Drive Daemon
 
-A simple daemon that autostarts on launch so you get notified when a drive is connected.
+![screenshot](data/screenshot.png)
+
+A simple daemon that autostarts on launch so you get notified when a removable drive is connected.
 
 ## Building and Installation
 
