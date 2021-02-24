@@ -2,9 +2,10 @@
 Type=Application
 Name=Drive Daemon
 Comment=Drive Daemon
+Icon=drive-removable-media-usb
 Exec=com.github.pongloongyeat.drive-daemon
 Terminal=false
-Categories=System;Utilities;
+Categories=System;Utility;
 NoDisplay=true
 StartupNotify=true
 X-GNOME-AutoRestart=true

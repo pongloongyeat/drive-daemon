@@ -51,7 +51,11 @@ public class DriveDaemon.Application : GLib.Application {
 
         if (n_volumes == drive.get_volumes ().length ()) {
             var notification = new Notification (_("%s connected").printf (drive.get_name ()));
-            notification.set_icon (drive.get_icon ());
+
+            /* Elementary's Notification server does not support
+            changing the icon atm. */
+            // notification.set_icon (drive.get_icon ());
+
             notification.set_body (_("With %u %s present").printf (n_volumes, ngettext ("volume", "volumes", n_volumes)));
 
             send_notification (application_id, notification);
